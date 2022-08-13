@@ -3,6 +3,7 @@ using CarListApp.Maui.Services;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CarListApp.Maui.ViewModels;
 
@@ -17,6 +18,9 @@ public partial class CarListViewModel : BaseViewModel
         Title = "Car List";
         _carService = carService;
     }
+
+    [ObservableProperty]
+    private bool _isRefreshing;
 
     [RelayCommand]
     private async Task GetCarList()
@@ -49,6 +53,7 @@ public partial class CarListViewModel : BaseViewModel
         finally
         {
             IsLoading = false;
+            IsRefreshing = false;
         }
     }
 }
