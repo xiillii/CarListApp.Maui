@@ -49,12 +49,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Views\" />
+	  <PackageReference Include="Bogus" Version="34.0.2" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Bogus" Version="34.0.2" />
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	  <MauiXaml Update="Views\CarDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
