@@ -10,14 +10,14 @@ namespace CarListApp.Maui.ViewModels;
 
 public partial class CarListViewModel : BaseViewModel
 {
-    private readonly CarService _carService;
+    
 
     public ObservableCollection<Car> Cars { get; private set; } = new();
 
-    public CarListViewModel(CarService carService)
+    public CarListViewModel()
     {
         Title = "Car List";
-        _carService = carService;
+        
     }
 
     [ObservableProperty]
@@ -39,7 +39,7 @@ public partial class CarListViewModel : BaseViewModel
                 Cars.Clear();
             }
 
-            var cars = _carService.GetCars();
+            var cars = App.CarService.GetCars();
 
             foreach (var car in cars)
             {
