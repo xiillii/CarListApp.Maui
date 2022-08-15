@@ -1,4 +1,5 @@
-﻿using Bogus;
+﻿using System.Diagnostics;
+using Bogus;
 using CarListApp.Maui.Models;
 using SQLite;
 
@@ -8,12 +9,12 @@ public class CarService
 {
     private SQLiteConnection _conn;
     private string _dbPath;
-    private string _statusMessage;
+    public string StatusMessage { get; private set; }
 
     public CarService(string dbPath)
     {
         _dbPath = dbPath;
-        _statusMessage = "";
+        StatusMessage = "";
     }
 
     private void Init()
@@ -37,9 +38,52 @@ public class CarService
         }
         catch (Exception e)
         {
-            _statusMessage = "Failed to retrieve data.";
+            Debug.WriteLine(e.Message);
+            StatusMessage = "Failed to retrieve data.";
         }
 
         return new List<Car>();
+    }
+
+    public void AddCar(Car car)
+    {
+        try
+        {
+            if (car == null)
+            {
+                throw new Exception("Invalid car record");
+            }
+
+            Init();
+
+            var result = _conn.Insert(car);
+            StatusMessage = result == 0 ? "Insert Failed" : "Insert Successful";
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            StatusMessage = "Failed to Insert data";
+        }
+    }
+
+    public int DeleteCar(int id)
+    {
+        try
+        {
+            Init();
+            return _conn.Table<Car>().Delete(q => q.Id.Equals(id));
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            StatusMessage = "Failed to Delete data";
+        }
+
+        return 0;
+    }
+
+    public Car GetCar(int id)
+    {
+        throw new NotImplementedException();
     }
 }
